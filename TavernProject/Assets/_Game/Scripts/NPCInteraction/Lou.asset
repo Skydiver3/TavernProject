@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8155732027f00545879cd1005dd30a9, type: 3}
+  m_Name: Lou
+  m_EditorClassIdentifier: 
+  description: A quiet alien
+  lines:
+  - Hi there:)
+  - Name's Lou.
+  - Hope you are having a beautiful day.
+  image: {fileID: 21300000, guid: e1a86f12a4a131e4591b13d8e217d7ec, type: 3}

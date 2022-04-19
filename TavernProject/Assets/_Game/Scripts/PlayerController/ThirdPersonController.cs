@@ -23,19 +23,30 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField]
     private Camera playerCamera;
 
-    private void Awake()
+    private bool _initialized = false;
+
+    private void Start()
     {
         rb = this.GetComponent<Rigidbody>();
-        playerActionsAsset = new ThirdPersonActionsAsset();
+        Subscribe();
     }
 
     private void OnEnable()
     {
+        if (_initialized) Subscribe();
+    }
+    private void Subscribe()
+    {
+        print(GameManager.Instance);
+        print(GameManager.Instance.playerInputManager.GetPlayerActionsAsset());
+        playerActionsAsset = GameManager.Instance.playerInputManager.GetPlayerActionsAsset();
+
         playerActionsAsset.Player.Enable();
         playerActionsAsset.Player.Jump.started += DoJump;
         move = playerActionsAsset.Player.Move;
-    }
 
+        _initialized = true;
+    }
     private void OnDisable()
     {
         playerActionsAsset.Player.Jump.started -= DoJump;
@@ -44,6 +55,8 @@ public class ThirdPersonController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        LookAt();
+
         forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
         forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(playerCamera) * movementForce;
 
@@ -58,9 +71,9 @@ public class ThirdPersonController : MonoBehaviour
         Vector3 horizontalVelocity = rb.velocity;
         horizontalVelocity.y = 0;
         if (horizontalVelocity.sqrMagnitude > maxSpeed * maxSpeed)
+        {
             rb.velocity = horizontalVelocity.normalized * maxSpeed + Vector3.up * rb.velocity.y;
-        
-        LookAt();
+        }
     }
 
     private void LookAt()

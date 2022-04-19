@@ -8,81 +8,89 @@ public class Inventory : MonoBehaviour
     [SerializeField] private List<PickableItem> _itemList = new List<PickableItem>();
 
     public bool listeningForInput = true;
-    [SerializeField] string pickableTag = "pickableItem";
     [SerializeField] private Transform _dropTransform;
 
     private InventoryDisplay _display;
 
-    private ThirdPersonActionsAsset playerActionsAsset;
 
-    private PickableItem _hoveredItem;
-
-    private void Awake()
-    {
-
-        playerActionsAsset = new ThirdPersonActionsAsset();
-    }
-    private void OnEnable()
-    {
-        playerActionsAsset.Player.Interact.started += TryPickItem;
-        playerActionsAsset.Player.Enable();
-    }
     private void Start()
     {
+        GameManager.Instance.playerInputManager.GetPlayerActionsAsset().Player.OpenInventory.started += ShowInventory;
+
         _display = DisplayManager.Instance.inventoryDisplay;
         _display.onItemDrop += DropItem;
     }
-    private void OnDisable()
-    {
-        playerActionsAsset.Player.Interact.started -= TryPickItem;
-        playerActionsAsset.Player.Disable();
-        
-    }
     private void OnDestroy()
     {
+        GameManager.Instance.playerInputManager.GetPlayerActionsAsset().Player.OpenInventory.started -= ShowInventory;
         _display.onItemDrop -= DropItem;
     }
-    private void OnTriggerExit(Collider other)
+
+    private void ShowInventory(InputAction.CallbackContext obj)
     {
-        _hoveredItem = null;
-    }
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.tag != pickableTag) return;
-        if (_hoveredItem == null)
-        {
-            PickableItem item = other.GetComponent<PickableItem>();
-            if (!item) Debug.LogError("[Inventory] Object marked as Item has no Pickable attached, failed to pick up.");
-            _hoveredItem = item;
-        }
+        _display.gameObject.SetActive(true);
+        _display.Init();
+        _display.ClearItems();
+        _display.DisplayItems(_itemList);
     }
 
-    private void TryPickItem(InputAction.CallbackContext obj)
+    public void TryPickItem(PickableItem item)
     {
-        if (_hoveredItem) PickItem(_hoveredItem);
-        _hoveredItem = null;
+        if (item) PickItem(item);
     }
 
+    //add item to inventory and clear message
     private void PickItem(PickableItem item)
     {
         _itemList.Add(item);
         item.Hide();
+        PlayerMessageSystem.Instance.Hide("Pick " + item.name);
         //TODO: build proper menu view for item display. do we want a quick access bar?
         //_display.DisplayItemAt(item, _itemList.Count - 1);
     }
 
-    private void DropItem(int index)
+    //remove item from list, call drop event of item, tell display to update
+    private void DropItem(int index, PickableItem item)
     {
-        if(_itemList.Count<= index)
+        if (_itemList.Count <= index)
         {
             Debug.LogWarning("[Inventory] Attempted to remove item from empty slot, no item to remove at this index.");
             return;
         }
-        PickableItem item = _itemList[index];
         _itemList.RemoveAt(index);
-        item.PlaceAt(_dropTransform);
+        item.Drop(_dropTransform);
 
         _display.ClearItems();
         _display.DisplayItems(_itemList);
+    }
+
+    public void RemoveItem(PickableItem item)
+    {
+        if (!_itemList.Contains(item)) return;
+
+        _itemList.Remove(item);
+    }
+
+    public void RemoveItem(int i)
+    {
+        if (_itemList.Count <= i) return;
+
+        _itemList.RemoveAt(i);
+    }
+
+    //filter items in inventory for one specific type
+    public List<PickableItem> GetItemsOfType<T>() where T : PickableItem
+    {
+        List<PickableItem> items = new List<PickableItem>();
+        foreach (PickableItem item in _itemList)
+        {
+            T castPickable = item as T;
+            if (castPickable != null)
+            {
+                items.Add(item);
+            }
+        }
+
+        return items;
     }
 }

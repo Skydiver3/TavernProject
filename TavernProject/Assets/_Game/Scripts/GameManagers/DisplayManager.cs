@@ -21,4 +21,7 @@ public class DisplayManager : MonoBehaviour
     }
 
     public InventoryDisplay inventoryDisplay;
+    public Transform displayParent;
+    public GameObject itemDisplayWindow;
+    public InteractionScreen dialogueWindow;
 }

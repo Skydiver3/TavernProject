@@ -12,6 +12,7 @@ public class InventoryDisplaySlot : MonoBehaviour
     [SerializeField] private Image _itemImage;
     [SerializeField] private Sprite _defaultSprite;
     [SerializeField] private TextMeshProUGUI _itemText;
+    [SerializeField] private TextMeshProUGUI _buttonText;
     [SerializeField] private string _defaultText;
     [SerializeField] private GameObject _showMenuButton;
     [SerializeField] private GameObject _hideMenuButton;
@@ -50,5 +51,10 @@ public class InventoryDisplaySlot : MonoBehaviour
     public void HideItemMenu()
     {
         if (_active) _onHoverExit?.Invoke();
+    }
+
+    public void SetButtonText(string buttonText)
+    {
+        _buttonText.text = buttonText;
     }
 }
