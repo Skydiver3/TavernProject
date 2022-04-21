@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ThirdPersonController : MonoBehaviour
+public class ThirdPersonController : MonoBehaviourPunCallbacks
 {
     //input fields
     private ThirdPersonActionsAsset playerActionsAsset;
@@ -27,12 +28,19 @@ public class ThirdPersonController : MonoBehaviour
 
     private void Start()
     {
+        if(!photonView.IsMine)
+            return;
+            
         rb = this.GetComponent<Rigidbody>();
+        playerCamera = Camera.main;
         Subscribe();
     }
 
     private void OnEnable()
     {
+        if(!photonView.IsMine)
+            return;
+        
         if (_initialized) Subscribe();
     }
     private void Subscribe()
@@ -55,6 +63,9 @@ public class ThirdPersonController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(!photonView.IsMine)
+            return;
+        
         LookAt();
 
         forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
