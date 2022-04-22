@@ -16,6 +16,7 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.playerInputManager.GetPlayerActionsAsset().Player.OpenInventory.started += ShowInventory;
+        GameManager.Instance.inventory = this;
 
         _display = DisplayManager.Instance.inventoryDisplay;
         _display.onItemDrop += DropItem;
@@ -36,6 +37,7 @@ public class Inventory : MonoBehaviour
 
     public void TryPickItem(PickableItem item)
     {
+        print("try pick "+item);
         if (item) PickItem(item);
     }
 
