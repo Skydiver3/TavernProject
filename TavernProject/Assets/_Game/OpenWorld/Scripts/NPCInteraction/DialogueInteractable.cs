@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DialogueInteractable : MonoBehaviour, IInteractable
 {
+    public int ID;
     public Character character;
     public bool interactive = true;
     private static string _interactionText = "Talk to ";
@@ -28,4 +29,5 @@ public class DialogueInteractable : MonoBehaviour, IInteractable
         print("character: " + character.name);
         DisplayManager.Instance.dialogueWindow.DisplayDialogue(character);
     }
+
 }

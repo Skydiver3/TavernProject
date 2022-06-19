@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 4544385530676303913}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.0846, y: 0.21944584, z: 2.0846}
+  m_LocalScale: {x: 0.5761418, y: 0.06065043, z: 0.5761418}
   m_Children: []
   m_Father: {fileID: 4544385531040939587}
   m_RootOrder: 0
@@ -130,14 +130,14 @@ MonoBehaviour:
   free: 1
   _watered: 0
   growthSpeed: 0.1
-  _itemActionText: Plant
+  _itemActionText: Pick
   _plantBedActionText: Plant
   _waterActionText: Water
   _bedRenderer: {fileID: 4544385530676303915}
   _wateredColors:
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0.6603774, g: 0.4776551, b: 0.37068352, a: 1}
+  - {r: 0.4811321, g: 0.34527352, b: 0.26553044, a: 1}
+  - {r: 0.3207547, g: 0.23121297, b: 0.18004628, a: 1}
 --- !u!65 &4544385531040939596
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -147,7 +147,7 @@ BoxCollider:
   m_GameObject: {fileID: 4544385531040939586}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 3, y: 1, z: 3}
+  m_Size: {x: 0.7, y: 0.27638, z: 0.68}
   m_Center: {x: 0, y: 0, z: 0}

@@ -8,7 +8,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6959881818482500253}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 4775b7d35b0be8d4ab575ea835ab48c0, type: 2}
   m_CullingMode: 0
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 5097611287921470819}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementForce: 1
   jumpForce: 5
-  maxSpeed: 0.1
+  maxSpeed: 5
   playerCamera: {fileID: 0}
   animator: {fileID: 5427016435632962177}
 --- !u!54 &8928503005163134773
@@ -455,6 +455,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: sam_walking
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 17fbecc4a8fa3654a863f007bb6cebf9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1060849004382241902, guid: 17fbecc4a8fa3654a863f007bb6cebf9, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -552,7 +556,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c0cc0aa0808b02545a8a99a7dced26ba, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0cc0aa0808b02545a8a99a7dced26ba, type: 3}

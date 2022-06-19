@@ -7,6 +7,7 @@ public class PickableItem : MonoBehaviour, IInteractable
 {
     public string description = "An item. What is it? We don't know.";
     public Sprite displaySprite;
+    public int itemID;
 
     public virtual void Hide()
     {
@@ -34,4 +35,5 @@ public class PickableItem : MonoBehaviour, IInteractable
     {
         return true;
     }
+
 }

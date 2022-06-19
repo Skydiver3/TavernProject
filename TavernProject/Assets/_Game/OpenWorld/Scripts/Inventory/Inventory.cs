@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -44,8 +45,8 @@ public class Inventory : MonoBehaviour
     //add item to inventory and clear message
     private void PickItem(PickableItem item)
     {
-        _itemList.Add(item);
-        item.Hide();
+        _itemList.Add(GameManager.Instance.itemDatabase.GetItem(item.itemID).GetComponent<PickableItem>());
+        Destroy(item);
         PlayerMessageSystem.Instance.Hide("Pick " + item.name);
         //TODO: build proper menu view for item display. do we want a quick access bar?
         //_display.DisplayItemAt(item, _itemList.Count - 1);
@@ -60,7 +61,7 @@ public class Inventory : MonoBehaviour
             return;
         }
         _itemList.RemoveAt(index);
-        item.Drop(_dropTransform);
+        Instantiate(item.gameObject,_dropTransform.position,_dropTransform.rotation);
 
         _display.ClearItems();
         _display.DisplayItems(_itemList);
@@ -95,4 +96,43 @@ public class Inventory : MonoBehaviour
 
         return items;
     }
+
+
+    private InventoryData data;
+    public void Load()
+    {
+        string saveFile = Application.persistentDataPath + "/InventoryData.json";
+
+        //read file
+        if (File.Exists(saveFile))
+        {
+            string fileContents = File.ReadAllText(saveFile);
+            data = JsonUtility.FromJson<InventoryData>(fileContents);
+        }
+        foreach (int id in data.indexList)
+        {
+            _itemList.Add(GameManager.Instance.itemDatabase.GetItem(id).GetComponent<PickableItem>());
+        }
+    }
+
+    public void Save()
+    {
+        if (data == null) data = new InventoryData();
+
+        data.indexList = new int[_itemList.Count];
+        for (int i = 0; i < _itemList.Count; i++)
+        {
+            data.indexList[i] = _itemList[i].itemID;
+        }
+
+        string saveFile = Application.persistentDataPath + "/InventoryData.json";
+        string jsonString = JsonUtility.ToJson(data);
+
+        //write file
+        File.WriteAllText(saveFile, jsonString);
+    }
+}
+public class InventoryData
+{
+    public int[] indexList;
 }

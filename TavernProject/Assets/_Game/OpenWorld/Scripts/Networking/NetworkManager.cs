@@ -10,6 +10,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public GameObject playerPrefab;
     public Transform playerSpawnPoint;
 
+    public GameObject player;
+
     public static bool use_network = false;
 
     private void Start()
@@ -28,7 +30,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             }
             else
             {
-                Instantiate(playerPrefab, playerSpawnPoint.position,playerSpawnPoint.rotation);
+                player = Instantiate(playerPrefab, playerSpawnPoint.position,playerSpawnPoint.rotation);
             }
         }
     }

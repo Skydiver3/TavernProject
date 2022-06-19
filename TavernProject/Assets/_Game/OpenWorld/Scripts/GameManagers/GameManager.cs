@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public string testString = "test";
     public WorldSettings worldSettings;
     public PlayerInputManager playerInputManager;
+    public ItemDatabase itemDatabase;
 
     private void Awake()
     {

@@ -41,9 +41,14 @@ public class Interactor : MonoBehaviour
             PlayerMessageSystem.Instance.Hide(hoveredObject.GetInteractionText());
         }
 
-        //skip if one exists
+        
+        //skip if one exists, but update message if suddenly changed
         if (hoveredObject != null)
         {
+            if (PlayerMessageSystem.Instance.currentMessage != "" && hoveredObject.GetInteractionText() != PlayerMessageSystem.Instance.currentMessage)
+            {
+                PlayerMessageSystem.Instance.Message(hoveredObject.GetInteractionText());
+            }
             return;
         }
 
@@ -68,8 +73,18 @@ public class Interactor : MonoBehaviour
     {
         if (hoveredObject == null) return;
         hoveredObject.Interact();
-        PlayerMessageSystem.Instance.Hide(hoveredObject.GetInteractionText());
-        hoveredObject = null;
+
+        //if message changed after interaction: show new message, otherwise hide message
+        string _text = hoveredObject.GetInteractionText();
+        if (PlayerMessageSystem.Instance.currentMessage!=""&&_text != PlayerMessageSystem.Instance.currentMessage)
+        {
+            PlayerMessageSystem.Instance.Message(hoveredObject.GetInteractionText());
+        }
+        else
+        {
+            PlayerMessageSystem.Instance.Hide(_text);
+            hoveredObject = null;
+        }
 
     }
 }

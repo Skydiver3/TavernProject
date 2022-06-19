@@ -9,6 +9,7 @@ public class PlayerMessageSystem : MonoBehaviour
     public static PlayerMessageSystem Instance { get { return _instance; } }
 
     public TextMeshProUGUI displayText;
+    public string currentMessage;
     public GameObject displayObject;
 
     private Coroutine hideTextCoroutine;
@@ -28,6 +29,7 @@ public class PlayerMessageSystem : MonoBehaviour
     public void Message(string msg, float seconds = 0.0f)
     {
         if (hideTextCoroutine != null) StopCoroutine(hideTextCoroutine);
+        currentMessage = msg;
         displayText.text = msg;
         if (seconds > 0) hideTextCoroutine = StartCoroutine(HideMessageAfterSeconds(seconds));
     }
@@ -35,6 +37,7 @@ public class PlayerMessageSystem : MonoBehaviour
     {
         if (s != "" && s != displayText.text) return;
 
+        currentMessage = "";
         displayText.text = "";
         displayObject.SetActive(true);
     }
